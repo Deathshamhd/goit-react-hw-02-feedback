@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-
 import {
     MainContainer,
-    Buttons
+    Buttns
 } from './feedback.styled'
 
 
@@ -16,34 +15,84 @@ export class FeedbackWidget extends Component {
             bad: 0,
 
         }
+
     }
-}
-handleIncrementGood = () => {
-    this.setState({ good: this.state.good + 1 })
-}
-handleIncrementNeutral = () => {
-    this.setState({ neutral: this.state.neutral + 1 })
-}
-handleIncrementBad = () => {
-    this.setState({ bad: this.state.bad + 1 })
-}
-// total feed back count 
-countTotalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
+    handleIncrementGood = () => {
+        this.setState({ good: this.state.good + 1 })
+    }
+    handleIncrementNeutral = () => {
+        this.setState({ neutral: this.state.neutral + 1 })
+    }
+    handleIncrementBad = () => {
+        this.setState({ bad: this.state.bad + 1 })
+    }
 
-}
+    //  the total feedback count
+    countTotalFeedback = () => {
+        return this.state.good + this.state.neutral + this.state.bad;
 
-// total feed back  % of positive feedback out of 100
-countPositivePercentage = () => {
-    const totalFeedback = this.countTotalFeedback();
-    if (totalFeedback === 0) {
+    }
+    //  the % of positive feedback
+
+    countPositivePercentage = () => {
+        const totalFeedback = this.countTotalFeedback();
+        if (totalFeedback === 0) {
+            // to avoid devision by zero, let's check if totalFeedback is not 0
+            return 0;
+        } else {
+
+            return Math.round((this.state.good / totalFeedback) * 100)
+
+        }
+
+
+    }
+
+    render() {
+        const { good, neutral, bad } = this.state;
+
         
-        return 0;
-    } else {
+        const { countTotalFeedback, countPositivePercentage } = this
 
-        return Math.round((this.state.good / totalFeedback) * 100)
+        const FeedbackOptions = () => {
+            return (
+                <div><MainContainer>
+                    <h1>Please leave feedback</h1>
+                    <Buttns type="button" onClick={this.handleIncrementGood}>Good</Buttns>
+                    <Buttns type="button" onClick={this.handleIncrementNeutral}>Neutral</Buttns>
+                    <Buttns type="button" onClick={this.handleIncrementBad}>Bad</Buttns>
+                    </MainContainer>
+                </div>
+            )
+        }
+
+        const Statistics = () => {
+            return (
+                <div><MainContainer>
+                    {countTotalFeedback() === 0 ? (
+                        //if there is no feedback
+                        <p>No feedback</p>
+                    ) : (
+                        //if  feedback  not 0 then
+                        <>
+                            <h1>Statistics</h1>
+                            <p>Good: {good}</p>
+                            <p>Neutral: {neutral}</p>
+                            <p>Bad: {bad}</p>
+                            <p>Total:{countTotalFeedback()}</p>
+                            <p>Positive Percentage: {countPositivePercentage()}%</p>
+                        </>
+                    )}
+                    </MainContainer>
+                </div>
+            )
+        }
+        return (
+            <div>
+                <FeedbackOptions></FeedbackOptions>
+                <Statistics></Statistics>
+            </div>
+        )
 
     }
-
-
 }
