@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+
 import {
     MainContainer,
-    Buttns
+    Buttons
 } from './feedback.styled'
 
 

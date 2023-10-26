@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MainContainer = styled.div`
     margin:10px;
 `
-export const Buttns = styled.button`
+export const Buttons = styled.button`
     border: 1px solid red;
     background-color: transparent;
     border-radius: 5px;
